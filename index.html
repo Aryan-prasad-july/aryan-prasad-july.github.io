@@ -9,14 +9,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0a0a0a;
-      --primary-card: #111111;
-      --primary-green: #00e676;
-      --accent-green: #1de9b6;
-      --text-light: #ffffff;
-      --text-secondary: #a0a0a0;
-      --border-glow: rgba(0, 230, 118, 0.5);
-      --gradient-primary: linear-gradient(135deg, #00e676, #1de9b6);
+      --bg-dark: #0d1117;
+      --primary-card: #161b22;
+      --primary-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-pink: #ec4899;
+      --text-light: #f0f6fc;
+      --text-secondary: #7d8590;
+      --border-glow: rgba(139, 92, 246, 0.5);
+      --gradient-primary: linear-gradient(135deg, #8b5cf6, #06b6d4);
+      --gradient-accent: linear-gradient(135deg, #ec4899, #8b5cf6);
     }
 
     * {
@@ -37,19 +39,65 @@
       line-height: 1.6;
     }
 
-    /* Animated Background */
+    /* Floating Orbs Background */
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 230, 118, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(29, 233, 182, 0.1) 0%, transparent 50%);
+      top: 20%;
+      left: 10%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatOrb1 15s ease-in-out infinite;
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 60%;
+      right: 15%;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: floatOrb2 12s ease-in-out infinite reverse;
       z-index: -1;
-      animation: float 20s ease-in-out infinite;
+    }
+
+    /* Additional floating orbs */
+    .floating-orb {
+      position: fixed;
+      border-radius: 50%;
+      z-index: -3;
+      pointer-events: none;
+    }
+
+    .floating-orb:nth-child(1) {
+      top: 40%;
+      left: 80%;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, transparent 70%);
+      animation: floatOrb3 18s ease-in-out infinite;
+    }
+
+    @keyframes floatOrb1 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(50px, -30px) scale(1.1); }
+      66% { transform: translate(-30px, 40px) scale(0.9); }
+    }
+
+    @keyframes floatOrb2 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-40px, -50px) scale(1.2); }
+    }
+
+    @keyframes floatOrb3 {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(-60px, 20px) scale(0.8); }
+      75% { transform: translate(40px, -35px) scale(1.1); }
     }
 
     @keyframes float {
@@ -94,7 +142,10 @@
 
     .hero .subtitle {
       font-size: clamp(1.2rem, 4vw, 2rem);
-      color: var(--accent-green);
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       font-weight: 600;
       animation: slideInUp 1s ease-out 0.6s both;
     }
@@ -110,7 +161,7 @@
     .scroll-indicator::after {
       content: '↓';
       font-size: 2rem;
-      color: var(--primary-green);
+      color: var(--primary-purple);
     }
 
     @keyframes slideInUp {
@@ -135,16 +186,17 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(17, 17, 17, 0.9);
-      backdrop-filter: blur(10px);
+      background: rgba(22, 27, 34, 0.9);
+      backdrop-filter: blur(15px);
       z-index: 1000;
       padding: 1rem 0;
       transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
     }
 
     nav.scrolled {
-      background: rgba(17, 17, 17, 0.95);
-      box-shadow: 0 2px 20px rgba(0, 230, 118, 0.1);
+      background: rgba(22, 27, 34, 0.95);
+      box-shadow: 0 2px 20px rgba(139, 92, 246, 0.15);
     }
 
     .nav-container {
@@ -174,8 +226,8 @@
 
     .nav-links a:hover,
     .nav-links a.active {
-      color: var(--primary-green);
-      background: rgba(0, 230, 118, 0.1);
+      color: var(--primary-purple);
+      background: rgba(139, 92, 246, 0.1);
     }
 
     .nav-links a::before {
@@ -236,33 +288,36 @@
     .project-card,
     .skill-card,
     .achievement-card,
-    .contact-card {
+    .contact-card,
+    .gallery-item {
       background: var(--primary-card);
       padding: 2rem;
       border-radius: 20px;
-      border: 1px solid rgba(0, 230, 118, 0.2);
+      border: 1px solid rgba(139, 92, 246, 0.2);
       transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
-      z-index: 1; /* Ensures content is above the border animation */
+      z-index: 1;
     }
 
     .main-card-container:hover,
     .project-card:hover,
     .skill-card:hover,
     .achievement-card:hover,
-    .contact-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0, 230, 118, 0.15);
-      border-color: rgba(0, 230, 118, 0.4);
+    .contact-card:hover,
+    .gallery-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+      border-color: rgba(139, 92, 246, 0.4);
     }
 
-    /* Revolving Border Animation for all cards */
+    /* Revolving Border Animation */
     .main-card-container::before,
     .project-card::before,
     .skill-card::before,
     .achievement-card::before,
-    .contact-card::before {
+    .contact-card::before,
+    .gallery-item::before {
       content: "";
       position: absolute;
       top: -3px;
@@ -272,15 +327,15 @@
       border-radius: 23px;
       background: conic-gradient(
         from 0deg,
-        #00e676,
-        #00ff88,
-        #1de9b6,
-        #00e676,
-        #26ff7a,
-        #00e676
+        #8b5cf6,
+        #ec4899,
+        #06b6d4,
+        #8b5cf6,
+        #a855f7,
+        #8b5cf6
       );
       z-index: -1;
-      animation: spinBorder 3s linear infinite;
+      animation: spinBorder 4s linear infinite;
       opacity: 0;
       transition: opacity 0.3s ease;
     }
@@ -289,7 +344,8 @@
     .project-card:hover::before,
     .skill-card:hover::before,
     .achievement-card:hover::before,
-    .contact-card:hover::before {
+    .contact-card:hover::before,
+    .gallery-item:hover::before {
       opacity: 1;
     }
 
@@ -297,7 +353,8 @@
     .project-card::after,
     .skill-card::after,
     .achievement-card::after,
-    .contact-card::after {
+    .contact-card::after,
+    .gallery-item::after {
       content: "";
       position: absolute;
       top: 0;
@@ -322,7 +379,7 @@
       max-width: 800px;
       margin: 0 auto;
       color: var(--text-secondary);
-      position: relative; /* Needed to be above the revolving border */
+      position: relative;
       z-index: 1;
     }
 
@@ -334,7 +391,7 @@
     }
 
     .skill-card h3 {
-      color: var(--primary-green);
+      color: var(--primary-purple);
       font-size: 1.4rem;
       margin-bottom: 1.5rem;
       display: flex;
@@ -359,10 +416,10 @@
       content: '⚡';
       position: absolute;
       left: 0;
-      color: var(--primary-green);
+      color: var(--accent-cyan);
     }
 
-    /* Projects Grid - Ensure all projects are in individual boxes */
+    /* Projects Grid */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -370,54 +427,14 @@
     }
 
     .project-card {
-      height: 300px;
+      height: auto;
       cursor: pointer;
       display: flex;
       flex-direction: column;
     }
 
-    .project-image {
-      width: 100%;
-      height: 60%;
-      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      flex-shrink: 0;
-      z-index: 1;
-    }
-
-    /* POP-UP EFFECT ON HOVER */
-    .project-image-inner {
-      width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.3s ease;
-    }
-    
-    .project-card:hover .project-image-inner {
-      transform: scale(1.2);
-    }
-
-    .project-image::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(0,230,118,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-      opacity: 0.3;
-    }
-
     .project-content {
-      padding: 1.5rem;
-      height: 40%;
+      padding: 2rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -427,17 +444,81 @@
     }
 
     .project-title {
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       font-weight: 600;
       color: var(--text-light);
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
 
     .project-description {
       color: var(--text-secondary);
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 1rem;
+      line-height: 1.6;
       flex: 1;
+    }
+
+    /* Gallery Section */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .gallery-item {
+      height: 300px;
+      cursor: pointer;
+      background: var(--primary-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      border: 2px dashed rgba(139, 92, 246, 0.3);
+      transition: all 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-item:hover {
+      border-style: solid;
+      border-color: var(--primary-purple);
+    }
+
+    .gallery-placeholder {
+      transition: opacity 0.3s ease;
+      z-index: 2;
+      position: relative;
+      text-align: center;
+    }
+
+    .gallery-placeholder h3 {
+      margin-bottom: 0.5rem;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gallery-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
+
+    .gallery-item:hover .gallery-image {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .gallery-item:hover .gallery-placeholder {
+      opacity: 0;
     }
 
     /* Achievements */
@@ -449,7 +530,7 @@
     }
 
     .achievement-card h3 {
-      color: var(--primary-green);
+      color: var(--accent-pink);
       font-size: 1.4rem;
       margin-bottom: 1.5rem;
       display: flex;
@@ -467,7 +548,7 @@
       color: var(--text-secondary);
       position: relative;
       padding-left: 2rem;
-      border-bottom: 1px solid rgba(0, 230, 118, 0.1);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.1);
     }
 
     .achievement-list li:last-child {
@@ -502,7 +583,7 @@
 
     .contact-icon {
       font-size: 2rem;
-      color: var(--primary-green);
+      color: var(--accent-cyan);
       margin-bottom: 1rem;
       position: relative; z-index: 1;
     }
@@ -523,7 +604,7 @@
       background: var(--primary-card);
       padding: 3rem 2rem;
       text-align: center;
-      border-top: 1px solid rgba(0, 230, 118, 0.1);
+      border-top: 1px solid rgba(139, 92, 246, 0.1);
       margin-top: 4rem;
     }
 
@@ -538,7 +619,7 @@
     }
 
     .footer-heart {
-      color: var(--primary-green);
+      color: var(--accent-pink);
       animation: pulse 2s ease-in-out infinite;
     }
 
@@ -569,9 +650,14 @@
       .projects-grid,
       .skills-grid,
       .contact-grid,
-      .achievements-grid {
+      .achievements-grid,
+      .gallery-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+      }
+
+      .achievements-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -585,12 +671,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--primary-green);
+      background: var(--primary-purple);
       border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-green);
+      background: var(--accent-cyan);
     }
   </style>
 </head>
@@ -602,6 +688,7 @@
         <li><a href="#about" class="nav-link">About</a></li>
         <li><a href="#skills" class="nav-link">Skills</a></li>
         <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#gallery" class="nav-link">Gallery</a></li>
         <li><a href="#achievements" class="nav-link">Achievements</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
@@ -625,9 +712,8 @@
     <div class="main-card-container">
       <div class="about-content">
         <p>
-          I'm Aryan Prasad, a passionate student with a deep interest in robotics, technology, and innovation. 
-          My dream is to become an IITian and use advanced technologies like AI and robotics to create meaningful impact—especially in transforming education in India. 
-          I believe in combining creativity, justice, and connection to build solutions that inspire progress.
+          I'm Aryan Prasad, a passionate innovator in Robotics, IoT, and Emerging Technologies, and the Senior ATAL Incharge at my school. My curiosity pushes me to design projects that merge creativity with real-world impact—ranging from smart farming systems to autonomous robots and drones.
+          I believe in leadership, teamwork, and using technology to solve meaningful problems. My mission is to create innovations that inspire progress and contribute to building a smarter, more connected future.
         </p>
       </div>
     </div>
@@ -670,9 +756,6 @@
     <div class="main-card-container">
       <div class="projects-grid">
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/farmtech.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Smart FarmTech</h3>
             <p class="project-description">
@@ -682,9 +765,6 @@
         </div>
         
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/linerobot.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Line Following Robot</h3>
             <p class="project-description">
@@ -694,9 +774,6 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/bluetooth.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Bluetooth Car</h3>
             <p class="project-description">
@@ -706,9 +783,6 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/drone.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Custom Drone</h3>
             <p class="project-description">
@@ -718,9 +792,6 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/robotarm.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Robotic Arm</h3>
             <p class="project-description">
@@ -730,15 +801,64 @@
         </div>
 
         <div class="project-card">
-          <div class="project-image">
-            <div class="project-image-inner" style="background-image: url('images/battlebot.jpg');"></div>
-          </div>
           <div class="project-content">
             <h3 class="project-title">Fighting Robo Car</h3>
             <p class="project-description">
               A competition-ready robo car built for battles, featuring a robust chassis and an effective weapon mechanism.
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery" class="section">
+    <div class="section-header">
+      <h2 class="section-title">Project Gallery</h2>
+      <p class="section-subtitle">Hover to reveal project images</p>
+    </div>
+    <div class="main-card-container">
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Smart FarmTech</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/farmtech.jpg');"></div>
+        </div>
+        
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Line Following Robot</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/linerobot.jpg');"></div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Bluetooth Car</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/bluetooth.jpg');"></div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Custom Drone</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/drone.jpg');"></div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Robotic Arm</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/robotarm.jpg');"></div>
+        </div>
+
+        <div class="gallery-item">
+          <div class="gallery-placeholder">
+            <h3>Fighting Robo Car</h3>
+          </div>
+          <div class="gallery-image" style="background-image: url('images/battlebot.jpg');"></div>
         </div>
       </div>
     </div>
@@ -813,13 +933,17 @@
 
   <footer>
     <div class="footer-content">
-      <p class="footer-text">© 2025 Aryan Prasad | Built with <span class="footer-heart">💚</span></p>
+      <p class="footer-text">© 2025 Aryan Prasad | Built with <span class="footer-heart">💜</span></p>
     </div>
   </footer>
 
   <script>
-    // Smooth scrolling and navigation
+    // Create floating orbs
     document.addEventListener('DOMContentLoaded', function() {
+      // Create additional floating orb
+      const orb = document.createElement('div');
+      orb.className = 'floating-orb';
+      document.body.appendChild(orb);
       // Navbar scroll effect
       const navbar = document.getElementById('navbar');
       const navLinks = document.querySelectorAll('.nav-link');
@@ -890,11 +1014,12 @@
         navObserver.observe(section);
       });
 
-      // Project card interactions
-      const projectCards = document.querySelectorAll('.project-card');
-      projectCards.forEach(card => {
+      // Enhanced card interactions
+      const cards = document.querySelectorAll('.project-card, .skill-card, .achievement-card, .contact-card, .gallery-item');
+      cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
           this.style.transform = 'translateY(-15px) scale(1.02)';
+          this.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
         });
         
         card.addEventListener('mouseleave', function() {
@@ -902,12 +1027,22 @@
         });
       });
 
-      // Add hover sound effect (optional)
-      const cards = document.querySelectorAll('.project-card, .skill-card, .achievement-card, .contact-card');
-      cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-          // Add subtle scale effect
-          this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      // Gallery hover effects
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      galleryItems.forEach(item => {
+        const placeholder = item.querySelector('.gallery-placeholder');
+        const image = item.querySelector('.gallery-image');
+        
+        item.addEventListener('mouseenter', function() {
+          // Add extra rotation effect to the image
+          image.style.transform = 'scale(1.05) rotate(1deg)';
+          // Add glow effect
+          this.style.boxShadow = '0 25px 50px rgba(139, 92, 246, 0.3)';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+          image.style.transform = 'scale(1) rotate(0deg)';
+          this.style.boxShadow = '';
         });
       });
 
@@ -915,12 +1050,40 @@
       window.addEventListener('scroll', function() {
         const scrolled = window.pageYOffset;
         const hero = document.querySelector('.hero');
-        const rate = scrolled * -0.5;
+        const rate = scrolled * -0.3;
         
         if (hero) {
           hero.style.transform = `translateY(${rate}px)`;
         }
       });
+
+      // Add staggered animation to gallery items
+      const galleryGrid = document.querySelector('.gallery-grid');
+      if (galleryGrid) {
+        const galleryObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              const galleryItems = entry.target.querySelectorAll('.gallery-item');
+              galleryItems.forEach((item, i) => {
+                setTimeout(() => {
+                  item.style.opacity = '1';
+                  item.style.transform = 'translateY(0)';
+                }, i * 100);
+              });
+            }
+          });
+        }, { threshold: 0.2 });
+
+        galleryObserver.observe(galleryGrid);
+        
+        // Initially hide gallery items for animation
+        const galleryItems = galleryGrid.querySelectorAll('.gallery-item');
+        galleryItems.forEach(item => {
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(30px)';
+          item.style.transition = 'all 0.6s ease';
+        });
+      }
     });
 
     // Dynamic typing effect for hero title
@@ -949,6 +1112,20 @@
         }, 500);
       }
     });
+
+    // Add dynamic color shifts to the rotating stick
+    setInterval(() => {
+      const stick = document.querySelector('body::before');
+      if (stick) {
+        const colors = [
+          'linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.1) 20%, rgba(236, 72, 153, 0.2) 50%, rgba(6, 182, 212, 0.1) 80%, transparent 100%)',
+          'linear-gradient(90deg, transparent 0%, rgba(236, 72, 153, 0.1) 20%, rgba(6, 182, 212, 0.2) 50%, rgba(139, 92, 246, 0.1) 80%, transparent 100%)',
+          'linear-gradient(90deg, transparent 0%, rgba(6, 182, 212, 0.1) 20%, rgba(139, 92, 246, 0.2) 50%, rgba(236, 72, 153, 0.1) 80%, transparent 100%)'
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.documentElement.style.setProperty('--stick-gradient', randomColor);
+      }
+    }, 5000);
   </script>
 </body>
 </html>
